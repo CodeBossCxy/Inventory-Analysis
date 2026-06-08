@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vintech — Receipts vs. Demand Variability</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav class="tabs">
+        <a href="index.html">Part detail</a>
+        <a href="variability.html" class="active">Receipts vs. demand</a>
+      </nav>
+      <h1>Receipts vs. Demand Variability</h1>
+      <p class="subtitle">
+        Each dot representing one material type. The <strong>horizontal axis</strong> shows how much weekly
+        <strong>demand</strong> (depletion) varies; the <strong>vertical axis</strong> shows how much
+        weekly <strong>receipts</strong> vary; <strong>bubble size</strong> reflects inventory value.
+        Materials <strong>above the diagonal</strong> are receiving stock far more erratically than their
+        demand requires — the strongest candidates for smoother, more disciplined purchasing.
+        Larger bubbles carry more inventory dollars, so review them first.
+      </p>
+    </header>
+
+    <section class="controls">
+      <div class="field">
+        <label for="weeks">Week range</label>
+        <select id="weeks">
+          <option value="10">Past 10 weeks</option>
+          <option value="13" selected>Past 13 weeks (1 qtr)</option>
+          <option value="20">Past 20 weeks</option>
+          <option value="26">Past 26 weeks (½ yr)</option>
+          <option value="52">Past 52 weeks (1 yr)</option>
+        </select>
+      </div>
+
+      <button id="run">Run analysis</button>
+
+      <div class="field export-group">
+        <label>Export</label>
+        <div class="export-buttons">
+          <button id="exportCsv" class="secondary" disabled>CSV</button>
+          <button id="exportPng" class="secondary" disabled>Chart PNG</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="status" class="status hidden"></section>
+
+    <section class="chart-wrap">
+      <canvas id="chart" height="150"></canvas>
+      <p class="caption">Bubble size reflects inventory value — larger bubbles carry more dollars at stake.</p>
+    </section>
+
+    <section class="table-wrap">
+      <h3 style="margin:0 0 10px">Suspects, worst first <small style="color:#6b7280;font-weight:400">(receipts-to-demand variability ratio)</small></h3>
+      <table id="dataTable" class="hidden">
+        <thead>
+          <tr>
+            <th>Material</th>
+            <th class="num">CV receipts</th>
+            <th class="num">CV depletion</th>
+            <th class="num">Ratio (Y÷X)</th>
+            <th class="num">Inventory $</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <script src="variability.js"></script>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vintech — Inventory Flow & Valuation</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Chart.js (combo chart support is built in) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav class="tabs">
+        <a href="index.html" class="active">Part detail</a>
+        <a href="variability.html">Receipts vs. demand</a>
+      </nav>
+      <h1>Inventory Flow &amp; Valuation</h1>
+      <p class="subtitle">Received vs. depleted quantity and inventory valuation, by week, from Plex.</p>
+    </header>
+
+    <section class="controls">
+      <div class="field">
+        <label for="partNo">Part No.</label>
+        <input id="partNo" type="text" value="65-%" placeholder="e.g. 65-%  (use % as wildcard)" />
+        <small>Plex wildcard <code>%</code> is supported, e.g. <code>65-%</code>.</small>
+      </div>
+
+      <div class="field">
+        <label for="weeks">Week range</label>
+        <select id="weeks">
+          <option value="10" selected>Past 10 weeks</option>
+          <option value="13">Past 13 weeks (1 qtr)</option>
+          <option value="20">Past 20 weeks</option>
+          <option value="26">Past 26 weeks (½ yr)</option>
+          <option value="52">Past 52 weeks (1 yr)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="valuation">Valuation line</label>
+        <select id="valuation">
+          <option value="Total_Cost" selected>Cost (current)</option>
+          <option value="Total_Cost_Orig">Cost (beginning)</option>
+          <option value="Total_Qty">Qty (current)</option>
+          <option value="Total_Qty_Orig">Qty (beginning)</option>
+        </select>
+      </div>
+
+      <button id="run">Show chart</button>
+
+      <div class="field export-group">
+        <label>Export</label>
+        <div class="export-buttons">
+          <button id="exportCsv" class="secondary" disabled>CSV</button>
+          <button id="exportPng" class="secondary" disabled>Chart PNG</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="status" class="status hidden"></section>
+
+    <section class="chart-wrap">
+      <canvas id="chart" height="120"></canvas>
+    </section>
+
+    <section class="table-wrap">
+      <table id="dataTable" class="hidden">
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th class="num">Received</th>
+            <th class="num">Depleted</th>
+            <th class="num">Net change</th>
+            <th class="num">Qty (end)</th>
+            <th class="num">Valuation</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <script src="app.js"></script>
+  </body>
+</html>
